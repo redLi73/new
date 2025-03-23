@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja" id="top">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>クラブ＆バー</title>
+  <style>
+    /* ======== ここから既存のコード（変更なし） ======== */
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000; /* 背景は黒 */
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden; /* 横スクロール防止 */
+    }
+
+    .title {
+      position: absolute;
+      top: 3.5dvh;  
+      left: 2vw;    
+      font-size: 6dvh; 
+      color: #fff;
+      z-index: 100;
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 18vw;
+      height: 18vw;
+      background: transparent; 
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .hamburger-lines {
+      width: 50%;
+      height: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hamburger-lines span {
+      display: block;
+      width: 100%;
+      height: 6px;      
+      background: #fff; 
+    }
+
+    #menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #menu a {
+      color: #fff;
+      font-size: 2rem;
+      text-decoration: none;
+      margin: 15px 0;
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 3rem;
+      cursor: pointer;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 18vw;
+      background: #000;
+      z-index: 999;
+    }
+    .top-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: gray;
+    }
+    .divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 82vw;
+      width: 1px;
+      background: gray;
+    }
+    .reserve-btn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 82vw;
+      height: 18vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 5vw;
+    }
+    .instagram-btn {
+      position: absolute;
+      top: 0;
+      left: 82vw;
+      width: 18vw;
+      height: 18vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 5vw;
+    }
+
+    .ranking {
+      position: absolute;
+      top: 100dvh;   
+      left: 5vw;
+      width: 55vw;
+      height: 25vw;
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .ranking h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+    .ranking .rank-list {
+      font-size: 1rem; 
+      color: #fff;
+      margin: 0; 
+      padding: 0;
+      list-style: none;
+    }
+    .rank-list li {
+      margin: 5px 0;
+    }
+
+    .game-btn-abs {
+      position: absolute;
+      top: 100dvh; 
+      right: 5vw;
+      width: 25vw;
+      height: 25vw;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .game-btn-abs span {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .news-abs {
+      position: absolute;
+      left: 5vw;
+      right: 5vw;
+      top: calc(100dvh + 25vw + 20vh); 
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .news-abs h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    .footer-abs {
+      position: absolute;
+      top: calc(100dvh + 25vw + 20vh + 20vw + 25vw); 
+      width: 100vw;
+      background: gray;
+      text-align: center;
+      color: #fff;
+      padding: 10px;
+      margin-bottom: 25vw;
+    }
+    .footer-abs p {
+      margin: 10px 0;
+    }
+
+    /* 画像スクロールのコンテナ */
+    .scroll-container {
+      position: absolute;
+      top: 13dvh;     
+      left: 0;
+      width: 100vw;
+      height: 62dvh; 
+      overflow: hidden;
+      z-index: 50;    
+    }
+    .scroll-track {
+      display: flex;
+      animation: scroll-left 60s linear infinite;
+    }
+    .scroll-image {
+      flex-shrink: 0; 
+      width: 100vw;
+      height: 62dvh;
+      margin-right: 3vw;
+      background-size: cover;
+      background-position: center;
+    }
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-412vw); }
+    }
+
+    /* ======== ここまで既存のコード（変更なし） ======== */
+
+    /* ======== 新しく追加するロゴのCSS ======== */
+    .logo {
+      position: absolute;
+      /* ロゴの中心が上端から44dvh、左右中央50vw */
+      top: 44dvh;
+      left: 50vw;
+      /* 34vw × 34vw の正方形 */
+      width: 34vw;
+      height: 34vw;
+      transform: translate(-50%, -50%); /* 中心を指定位置に */
+      background: url('logo.png') no-repeat center/cover;
+      z-index: 9999; /* スクロール画像より手前に表示 */
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- 企画名（既存） -->
+  <div class="title">BARRR</div>
+
+  <!-- ハンバーガーメニューボタン（既存） -->
+  <div class="hamburger" onclick="openMenu()">
+    <div class="hamburger-lines">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- ハンバーガーメニュー（既存） -->
+  <nav id="menu">
+    <span class="close-btn" onclick="closeMenu()">×</span>
+    <a href="#top" onclick="closeMenu()">トップへ</a>
+    <a href="#">企画内容</a>
+    <a href="#">アクセス</a>
+  </nav>
+
+  <!-- ボトムナビゲーション（既存） -->
+  <div class="bottom-nav">
+    <div class="top-line"></div>
+    <div class="divider"></div>
+    <div class="reserve-btn">予約</div>
+    <div class="instagram-btn">I</div>
+  </div>
+
+  <!-- スクロール画像（既存） -->
+  <div class="scroll-container">
+    <div class="scroll-track">
+      <div class="scroll-image" style="background-image: url('bar-bg.png');"></div>
+      <div class="scroll-image" style="background-image: url('club-bg.png');"></div>
+      <div class="scroll-image" style="background-image: url('sample1.png');"></div>
+      <div class="scroll-image" style="background-image: url('sample2.png');"></div>
+      <!-- 5枚目(繰り返し) -->
+      <div class="scroll-image" style="background-image: url('bar-bg.png');"></div>
+    </div>
+  </div>
+
+  <!-- ランキング欄（既存） -->
+  <div class="ranking">
+    <h2>Ranking</h2>
+    <ul class="rank-list">
+      <li>1位 ○○</li>
+      <li>2位 △△</li>
+      <li>3位 □□</li>
+    </ul>
+  </div>
+
+  <!-- ゲームボタン（既存） -->
+  <div class="game-btn-abs">
+    <span>Game</span>
+  </div>
+
+  <!-- ニュース欄（既存） -->
+  <div class="news-abs">
+    <h2>News</h2>
+    <p>ここにニュースの内容</p>
+  </div>
+
+  <!-- フッター（既存） -->
+  <div class="footer-abs">
+    <p>5/25(金)　10:00～12:00</p>
+    <p>13:00～15:00</p>
+    <p>5/25(金)　10:00～12:00</p>
+    <p>13:00～15:00</p>
+    <p>@4-3</p>
+    <p>URLをコピー</p>
+  </div>
+
+  <!-- 新しく追加するロゴ要素 -->
+  <div class="logo"></div>
+
+  <script>
+    function openMenu() {
+      document.getElementById('menu').style.display = 'flex';
+    }
+    function closeMenu() {
+      document.getElementById('menu').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
